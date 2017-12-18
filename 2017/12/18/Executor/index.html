@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="后端," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="一个不一样的码农">
-<meta property="og:type" content="website">
-<meta property="og:title" content="jinxiaobo的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="转载自:https://www.cnblogs.com/timlearn/p/4023394.html![Executor]http://oztsyg7qw.bkt.clouddn.com/Executor.png在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread">
+<meta name="keywords" content="后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Executor框架及线程池(转载)">
+<meta property="og:url" content="http://yoursite.com/2017/12/18/Executor/index.html">
 <meta property="og:site_name" content="jinxiaobo的博客">
-<meta property="og:description" content="一个不一样的码农">
+<meta property="og:description" content="转载自:https://www.cnblogs.com/timlearn/p/4023394.html![Executor]http://oztsyg7qw.bkt.clouddn.com/Executor.png在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread类以及实现Runnable接口并赋给Thread，这两种创建线程的方式在线程比较">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-18T14:07:49.476Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jinxiaobo的博客">
-<meta name="twitter:description" content="一个不一样的码农">
+<meta name="twitter:title" content="Executor框架及线程池(转载)">
+<meta name="twitter:description" content="转载自:https://www.cnblogs.com/timlearn/p/4023394.html![Executor]http://oztsyg7qw.bkt.clouddn.com/Executor.png在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread类以及实现Runnable接口并赋给Thread，这两种创建线程的方式在线程比较">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/18/Executor/"/>
 
 
 
 
 
-  <title>jinxiaobo的博客</title>
+  <title>Executor框架及线程池(转载) | jinxiaobo的博客</title>
   
 
 
@@ -143,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +238,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -269,9 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/18/Executor/" itemprop="url">Executor框架及线程池(转载)</a></h1>
+          <h1 class="post-title" itemprop="name headline">Executor框架及线程池(转载)</h1>
         
 
         <div class="post-meta">
@@ -343,9 +342,7 @@
       
 
       
-        
-          
-            <p>转载自:<a href="https://www.cnblogs.com/timlearn/p/4023394.html" target="_blank" rel="noopener">https://www.cnblogs.com/timlearn/p/4023394.html</a><br>![Executor]<a href="http://oztsyg7qw.bkt.clouddn.com/Executor.png" target="_blank" rel="noopener">http://oztsyg7qw.bkt.clouddn.com/Executor.png</a><br>在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread类以及实现Runnable接口并赋给Thread，这两种创建线程的方式在线程比较少的时候是没有问题的，但是当需要创建大量线程时就会出现问题，因为这种使用方法把线程创建语句随意地散落在代码中，无法统一管理线程，我们将无法管理创建线程的数量，而过量的线程创建将直接使系统崩溃。</p>
+        <p>转载自:<a href="https://www.cnblogs.com/timlearn/p/4023394.html" target="_blank" rel="noopener">https://www.cnblogs.com/timlearn/p/4023394.html</a><br>![Executor]<a href="http://oztsyg7qw.bkt.clouddn.com/Executor.png" target="_blank" rel="noopener">http://oztsyg7qw.bkt.clouddn.com/Executor.png</a><br>在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread类以及实现Runnable接口并赋给Thread，这两种创建线程的方式在线程比较少的时候是没有问题的，但是当需要创建大量线程时就会出现问题，因为这种使用方法把线程创建语句随意地散落在代码中，无法统一管理线程，我们将无法管理创建线程的数量，而过量的线程创建将直接使系统崩溃。</p>
 <p>从高内聚角度讲，我们应该创建一个统一的创建以及运行接口，为我们管理这些线程，这个统一的创建与运行接口就是JDK 5的Executor框架。</p>
 <h2 id="Executor框架"><a href="#Executor框架" class="headerlink" title="Executor框架"></a>Executor框架</h2><p>在Java类库中，任务执行的主要抽象不是Thread，而是Executor，该接口定义如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Executor &#123;</span><br><span class="line">    void execute(Runnable <span class="built_in">command</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>虽然Executor是一个简单的接口，但它却为灵活且强大的异步任务执行框架提供了基础，该框架能够支持多种不同类型的任务执行策略，它提供了一种标准的方法将任务的提交过程与执行过程解耦开来。</p>
@@ -367,8 +364,6 @@
 <p>可以看到，这些静态工厂方法最终还是调用的ThreadPoolExecutor的构造函数，指定了线程池基本大小为0，最大大小为Integer值上限，线程存活时间为60s，阻塞队列是一个SynchronousQueue。从这些参数可以知道，当线程提交newCachedThreadPool的线程池时，由于基本大小为0，所以肯定大于基本大小，然后任务会进入阻塞队列，而SynchronousQueue内部没有任何容量，且当前线程数未达到最大线程数，所以任务将立即执行。任务执行完有60s的超时时间，如果在这段时间内有新任务调用，那么新任务将直接在这个线程上运行。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>线程池的使用能够帮助我们统一管理线程，提高线程的可管理性，在写多线程代码时，我们应该优先使用线程池方式创建线程。</p>
 
-          
-        
       
     </div>
     
@@ -383,310 +378,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="金晓波">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jinxiaobo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T11:07:36+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/后端/" rel="tag"># 后端</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/22/2017-11-22-qianduan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="金晓波">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jinxiaobo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/22/2017-11-22-qianduan/" itemprop="url">大前端完整学习路线（转载）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T23:32:15+08:00">
-                2017-11-22
-              </time>
+              <a href="/2017/11/23/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>大前端完整学习路线（详解）<br>转载自： <a href="http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432" target="_blank" rel="noopener">http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432</a><br><img src="http://oztsyg7qw.bkt.clouddn.com/%E7%8C%AB%E8%80%81%E5%A4%A7.jpeg" alt="猫老大"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/22/2017-11-22-qianduan/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -696,10 +417,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -707,6 +429,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -727,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -808,6 +543,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executor框架"><span class="nav-number">1.</span> <span class="nav-text">Executor框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池"><span class="nav-number">2.</span> <span class="nav-text">线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Executors静态工厂方法"><span class="nav-number">3.</span> <span class="nav-text">Executors静态工厂方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -940,6 +691,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
