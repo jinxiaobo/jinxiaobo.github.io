@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="什么是死锁？ 如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。">
+<meta name="description" content="什么是死锁？&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。">
 <meta name="keywords" content="后端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="死锁产生的原因及四个必要条件">
 <meta property="og:url" content="http://yoursite.com/2017/12/19/Deadlock/index.html">
 <meta property="og:site_name" content="jinxiaobo的博客">
-<meta property="og:description" content="什么是死锁？ 如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。">
+<meta property="og:description" content="什么是死锁？&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-19T06:40:09.071Z">
+<meta property="og:updated_time" content="2017-12-19T06:42:40.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="死锁产生的原因及四个必要条件">
-<meta name="twitter:description" content="什么是死锁？ 如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。">
+<meta name="twitter:description" content="什么是死锁？&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。">
 
 
 
@@ -282,7 +282,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T14:40:09+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T14:42:40+08:00">
                 2017-12-19
               </time>
             
@@ -342,10 +342,8 @@
       
 
       
-        <h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><blockquote>
-<p>如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。<br><a id="more"></a><br>这个定义可能有点拗口，下面用一个简单例子说明。<br>资源A、B，进程C、D描述如下：<br>　　资源A和资源B，都是不可剥夺资源，<br>　　现在进程C已经申请了资源A，进程D也申请了资源B，<br>　　进程C接下来的操作需要用到资源B，而进程D恰好也在申请资源A，<br>　　进程C、D都得不到接下来的资源，那么就引发了死锁。<br>然后套用回去定义：如果一个进程集合里面（进程C和进 程D）的每个进程（进程C和进程D）都在等待只能由这个集合中的其他一个进程（对于进程C，他在等进程D；对于进程D，他在等进程C）才能引发的事件（释放相应资源）。</p>
+        <h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;如果一个进程集合里面的每个进程都在等待只能由这个集合中的其他一个进程（包括他自身）才能引发的事件，这种情况就是死锁。<br><a id="more"></a><br>这个定义可能有点拗口，下面用一个简单例子说明。<br>资源A、B，进程C、D描述如下：<br>　　资源A和资源B，都是不可剥夺资源，<br>　　现在进程C已经申请了资源A，进程D也申请了资源B，<br>　　进程C接下来的操作需要用到资源B，而进程D恰好也在申请资源A，<br>　　进程C、D都得不到接下来的资源，那么就引发了死锁。<br>然后套用回去定义：如果一个进程集合里面（进程C和进 程D）的每个进程（进程C和进程D）都在等待只能由这个集合中的其他一个进程（对于进程C，他在等进程D；对于进程D，他在等进程C）才能引发的事件（释放相应资源）。</p>
 <p>这里的资源包括了软的资源（代码块）和硬的资源（例如扫描仪）。资源一般可以分两种：可剥夺资源（Preemptable）和不可剥夺资源 （Nonpreemptable）。一般来说对于由可剥夺资源引起的死锁可以由系统的重新分配资源来解决，所以一般来说大家说的死锁都是由于不可剥夺资源 所引起的。</p>
-</blockquote>
 <h2 id="产生死锁的原因"><a href="#产生死锁的原因" class="headerlink" title="产生死锁的原因"></a>产生死锁的原因</h2><p>（1）因为系统资源不足。<br>（2）进程运行推进的顺序不合适。<br>（3）资源分配不当等。<br>如果系统资源充足，进程的资源请求都能够得到满足，死锁出现的可能性就很低，否则<br>就会因争夺有限的资源而陷入死锁。其次，进程运行推进顺序与速度不同，也可能产生死锁。</p>
 <h2 id="死锁的四个必要条件"><a href="#死锁的四个必要条件" class="headerlink" title="死锁的四个必要条件"></a>死锁的四个必要条件</h2><p>互斥条件（Mutual exclusion）：资源不能被共享，只能由一个进程使用。<br>请求与保持条件（Hold and wait）：已经得到资源的进程可以再次申请新的资源。<br>非剥夺条件（No pre-emption）：已经分配的资源不能从相应的进程中被强制地剥夺。<br>循环等待条件（Circular wait）：系统中若干进程组成环路，该环路中每个进程都在等待相邻进程正占用的资源。</p>
 <h2 id="处理死锁的策略"><a href="#处理死锁的策略" class="headerlink" title="处理死锁的策略"></a>处理死锁的策略</h2><p>（1）忽略该问题。例如鸵鸟算法，该算法可以应用在极少发生死锁的的情况下。为什么叫鸵鸟算法呢，因为传说中鸵鸟看到危险就把头埋在地底下，可能鸵鸟觉得看不到危险也就没危险了吧。跟掩耳盗铃有点像。<br>（2）检测死锁并且恢复。<br>（3）仔细地对资源进行动态分配，以避免死锁。<br>（4）通过破除死锁四个必要条件之一，来防止死锁产生。</p>
