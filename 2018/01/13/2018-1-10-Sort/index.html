@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="排序," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="分类：1）插入排序（直接插入排序、希尔排序）2）交换排序（冒泡排序、快速排序）3）选择排序（直接选择排序、堆排序）4）归并排序5）分配排序（基数排序、桶排序）所需辅助空间最多：归并排序所需辅助空间最少：堆排序平均速度最快：快速排序稳定：直接插入排序，冒泡排序，归并排序，基数排序不稳定：快速排序，希尔排序，堆排序，简单选">
+<meta name="keywords" content="排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="八大排序算法（java实现）">
+<meta property="og:url" content="http://yoursite.com/2018/01/13/2018-1-10-Sort/index.html">
+<meta property="og:site_name" content="jinxiaobo的博客">
+<meta property="og:description" content="分类：1）插入排序（直接插入排序、希尔排序）2）交换排序（冒泡排序、快速排序）3）选择排序（直接选择排序、堆排序）4）归并排序5）分配排序（基数排序、桶排序）所需辅助空间最多：归并排序所需辅助空间最少：堆排序平均速度最快：快速排序稳定：直接插入排序，冒泡排序，归并排序，基数排序不稳定：快速排序，希尔排序，堆排序，简单选择排序">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/java%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F.jpg">
+<meta property="og:updated_time" content="2018-01-13T08:01:05.088Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="八大排序算法（java实现）">
+<meta name="twitter:description" content="分类：1）插入排序（直接插入排序、希尔排序）2）交换排序（冒泡排序、快速排序）3）选择排序（直接选择排序、堆排序）4）归并排序5）分配排序（基数排序、桶排序）所需辅助空间最多：归并排序所需辅助空间最少：堆排序平均速度最快：快速排序稳定：直接插入排序，冒泡排序，归并排序，基数排序不稳定：快速排序，希尔排序，堆排序，简单选择排序">
+<meta name="twitter:image" content="http://oztsyg7qw.bkt.clouddn.com/java%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/13/2018-1-10-Sort/"/>
+
+
+
+
+
+  <title>八大排序算法（java实现） | jinxiaobo的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jinxiaobo的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">兴趣使然的小站</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/2018-1-10-Sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="金晓波">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jinxiaobo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">八大排序算法（java实现）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-13T16:01:05+08:00">
+                2018-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>分类：<br>1）插入排序（直接插入排序、希尔排序）<br>2）交换排序（冒泡排序、快速排序）<br>3）选择排序（直接选择排序、堆排序）<br>4）归并排序<br>5）分配排序（基数排序、桶排序）<br>所需辅助空间最多：归并排序<br>所需辅助空间最少：堆排序<br>平均速度最快：快速排序<br>稳定：直接插入排序，冒泡排序，归并排序，基数排序<br>不稳定：快速排序，希尔排序，堆排序，简单选择排序<br><a id="more"></a><br>1、直接插入排序<br>基本思想：在要排序的一组数中，假设前面(n-1)[n&gt;=2]个数已经是排好顺序的，现在要把第n个数插到前面的有序数中，使得这n个数也是排好顺序的。如此反复循环，直到全部排好顺序。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//直接插入排序(稳定)</span><br><span class="line">   public static void insertSort(int[] numbers) &#123;</span><br><span class="line">       <span class="keyword">for</span> (int i = 1; i &lt; numbers.length; i++) &#123;//从头部第一个当做已经排好序的，把后面的一个一个的插到已经排好的列表中去。</span><br><span class="line">           int j;</span><br><span class="line">           int temp = numbers[i];</span><br><span class="line">           <span class="keyword">for</span> (j = i; j &gt; 0 &amp;&amp; temp &lt; numbers[j - 1]; j--) &#123;</span><br><span class="line">               numbers[j] = numbers[j - 1];//通过循环，逐个后移一位找到要插入的位置。</span><br><span class="line">           &#125;</span><br><span class="line">           numbers[j] = temp;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>2、希尔排序<br>希尔排序，也称递减增量排序算法，是插入排序的一种更高效的改进版本。希尔排序是非稳定排序算法。希尔排序是基于插入排序的以下两点性质而提出改进方法的：<br>插入排序在对几乎已经排好序的数据操作时，效率高，即可以达到线性排序的效率；但插入排序一般来说是低效的，因为插入排序每次只能将数据移动一位。先取一个正整数d1 &lt; n, 把所有相隔d1的记录放一组，每个组内进行直接插入排序；然后d2 &lt; d1，重复上述分组和排序操作；直至di = 1，即所有记录放进一个组中排序为止。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//希尔排序(缩小增量排序)(不稳定)</span><br><span class="line">   public static void shellSort(int[] numbers) &#123;</span><br><span class="line">       int dk = numbers.length / 2;</span><br><span class="line">       <span class="keyword">while</span> (dk &gt;= 1) &#123;</span><br><span class="line">           <span class="keyword">for</span> (int i = dk; i &lt; numbers.length; i += dk) &#123; //<span class="keyword">while</span>里面为直接插入排序,把1换成dk</span><br><span class="line">               int j;</span><br><span class="line">               int temp = numbers[i];</span><br><span class="line">               <span class="keyword">for</span> (j = i; j &gt; 0 &amp;&amp; temp &lt; numbers[j - dk]; j -= dk) &#123;</span><br><span class="line">                   numbers[j] = numbers[j - dk];</span><br><span class="line">               &#125;</span><br><span class="line">               numbers[j] = temp;</span><br><span class="line">           &#125;</span><br><span class="line">           dk /= 2;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>3、简单选择排序<br>基本思想：在要排序的一组数中，选出最小的一个数与第一个位置的数交换；然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//简单选择排序(不稳定)</span><br><span class="line">   public static void selectSort(int[] numbers) &#123;</span><br><span class="line">       <span class="keyword">for</span> (int i = 0; i &lt; numbers.length; i++) &#123;</span><br><span class="line">           int pos = i;//待确定的位置</span><br><span class="line">           <span class="keyword">for</span> (int j = numbers.length - 1; j &gt; i; j--) &#123;</span><br><span class="line">               <span class="keyword">if</span> (numbers[pos] &gt; numbers[j]) &#123;</span><br><span class="line">                   pos = j;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           //选择出应该在第i个位置的数,和第i个位置作交换</span><br><span class="line">           swap(numbers, pos, i);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   //交换数组中的两个数</span><br><span class="line">   public static void swap(int[] numbers, int x, int y) &#123;</span><br><span class="line">       int temp = numbers[x];</span><br><span class="line">       numbers[x] = numbers[y];</span><br><span class="line">       numbers[y] = temp;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>4、堆排序<br>基本思想：堆排序是一种树形选择排序，是对直接选择排序的有效改进。堆的定义如下：具有n个元素的序列（h1,h2,…,hn),当且仅当满足（hi&gt;=h2i,hi&gt;=2i+1）或（hi&lt;=h2i,hi&lt;=2i+1）(i=1,2,…,n/2)时称之为堆。在这里只讨论满足前者条件的堆。由堆的定义可以看出，堆顶元素（即第一个元素）必为最大项（大顶堆）。完全二叉树可以很直观地表示堆的结构。堆顶为根，其它为左子树、右子树。初始时把要排序的数的序列看作是一棵顺序存储的二叉树，调整它们的存储序，使之成为一个堆，这时堆的根节点的数最大。然后将根节点与堆的最后一个节点交换。然后对前面(n-1)个数重新调整使之成为堆。依此类推，直到只有两个节点的堆，并对它们作交换，最后得到有n个节点的有序序列。从算法描述来看，堆排序需要两个过程，一是建立堆，二是堆顶与堆的最后一个元素交换位置。所以堆排序有两个函数组成。一是建堆的渗透函数，二是反复调用渗透函数实现排序的函数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       int[] numbers = &#123;10,20,15,0,6,7,2,1,5,55&#125;;</span><br><span class="line">	<span class="keyword">for</span> (int i = 0; i &lt; numbers.length; i++) &#123;</span><br><span class="line">           heapSort(numbers, i, numbers.length - 1);</span><br><span class="line">       &#125;//堆排序调用</span><br><span class="line">       printArr(numbers);</span><br><span class="line">   &#125;</span><br><span class="line">   //堆排序(对简单选择排序的有效改进)(不稳定)</span><br><span class="line">   public static void heapSort(int[] numbers, int root, int end) &#123;</span><br><span class="line">       <span class="keyword">for</span> (int i = end; i &gt; root; i--) &#123;//从后往前</span><br><span class="line">           int parent = (i + root - 1) / 2;</span><br><span class="line">           <span class="keyword">if</span> (numbers[parent] &gt; numbers[i]) &#123;</span><br><span class="line">               swap(numbers, parent, i);//小顶堆,如果父节点大于当前节点,交换两者</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   //交换数组中的两个数</span><br><span class="line">   public static void swap(int[] numbers, int x, int y) &#123;</span><br><span class="line">       int temp = numbers[x];</span><br><span class="line">       numbers[x] = numbers[y];</span><br><span class="line">       numbers[y] = temp;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>5、冒泡排序<br>基本思想：在要排序的一组数中，对当前还未排好序的范围内的全部数，自上而下对相邻的两个数依次进行比较和调整，让较大的数往下沉，较小的往上冒。即：每当两相邻的数比较后发现它们的排序与排序要求相反时，就将它们互换。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//冒泡排序(稳定)</span><br><span class="line">   public static void bubbleSort(int[] numbers) &#123;</span><br><span class="line">       <span class="keyword">for</span> (int i = 0; i &lt; numbers.length - 1; i++) &#123;</span><br><span class="line">           <span class="keyword">for</span> (int j = 0; j &lt; numbers.length - 1 - i; j++) &#123;</span><br><span class="line">               <span class="keyword">if</span> (numbers[j] &gt; numbers[j + 1]) &#123;</span><br><span class="line">                   swap(numbers, j, j + 1); </span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>6、快速排序<br>基本思想：选择一个基准元素,通常选择第一个元素或者最后一个元素,通过一趟扫描，将待排序列分成两部分,一部分比基准元素小,一部分大于等于基准元素,此时基准元素在其排好序后的正确位置,然后再用同样的方法递归地排序划分的两部分。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//快速排序(不稳定)</span><br><span class="line">public static void quickSort(int[] numbers, int low, int high) &#123;</span><br><span class="line">    <span class="keyword">if</span> (low &lt; high) &#123;</span><br><span class="line">        int middle = getMiddle(numbers, low, high);</span><br><span class="line">        quickSort(numbers, low, middle - 1);//分治算法</span><br><span class="line">        quickSort(numbers, middle + 1, high);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">public static int getMiddle(int[] numbers, int low, int high) &#123;</span><br><span class="line">    int key = numbers[low]; //数组的第一个作为中轴</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(low &lt; high) &#123;</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; numbers[high] &gt;= key) &#123;</span><br><span class="line">            high--;</span><br><span class="line">        &#125;</span><br><span class="line">        numbers[low] = numbers[high];//比中轴小的记录移到低端</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; numbers[low] &lt;= key) &#123;</span><br><span class="line">            low++;</span><br><span class="line">        &#125;</span><br><span class="line">        numbers[high] = numbers[low];//比中轴大的记录移到高端</span><br><span class="line">    &#125;</span><br><span class="line">    numbers[low] = key;//中轴记录到正确位置上</span><br><span class="line">    <span class="built_in">return</span> low;//返回中轴的位置</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>7、归并排序<br>基本排序：归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表，即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//归并排序</span><br><span class="line">   public static void mergeSort(int[] numbers, int low, int high) &#123;</span><br><span class="line">       <span class="keyword">if</span> (low &lt; high) &#123;</span><br><span class="line">           int center = (low + high) / 2;</span><br><span class="line">           mergeSort(numbers, low, center);//对左边数组进行递归</span><br><span class="line">           mergeSort(numbers, center + 1, high);//对右边数组进行递归</span><br><span class="line">           merge(numbers, low, center, high);//合并</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   private static void merge(int[] numbers, int low, int center, int high) &#123;</span><br><span class="line">       int[] tempArr = new int[numbers.length];//临时数组</span><br><span class="line">       int middle = center + 1;//右数组第一个元素索引</span><br><span class="line">       int i = low;//记录当前low下标,待复制数组时使用</span><br><span class="line">       int tempPoint = low;//记录临时数组的索引</span><br><span class="line">       <span class="keyword">while</span> (low &lt;= center &amp;&amp; middle &lt;= high) &#123;</span><br><span class="line">           <span class="keyword">if</span> (numbers[low] &lt; numbers[middle]) &#123;//从两个数组中取出最小的放入临时数组</span><br><span class="line">               tempArr[tempPoint++] = numbers[low++];</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               tempArr[tempPoint++] = numbers[middle++];</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       //剩余部分依次放入临时数组（实际上两个<span class="keyword">while</span>只会执行其中一个）</span><br><span class="line">       <span class="keyword">while</span> (low &lt;= center) &#123;</span><br><span class="line">           tempArr[tempPoint++] = numbers[low++];</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">while</span> (middle &lt;= high) &#123;</span><br><span class="line">           tempArr[tempPoint++] = numbers[middle++];</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       //将临时数组中的内容拷贝回原数组中</span><br><span class="line">       //(原left-right范围的内容被复制回原数组）</span><br><span class="line">       <span class="keyword">for</span> (; i &lt;= high; i++) &#123;</span><br><span class="line">           numbers[i] = tempArr[i];</span><br><span class="line">       &#125;</span><br><span class="line">       /*<span class="keyword">while</span> (temp &lt;= high) &#123;</span><br><span class="line">           numbers[temp] = tempArr[temp++];</span><br><span class="line">       &#125;*/</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>8、基数排序<br>基本思想：将所有待比较数值（正整数）统一为同样的数位长度，数位较短的数前面补零。然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后,数列就变成一个有序序列。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">//基数排序(桶排序)(必须是0或正整数才能进行基数排序)</span><br><span class="line">   public static void radixSort(int[] numbers) &#123;</span><br><span class="line">       //确定排序趟数</span><br><span class="line">       int max = numbers[0];</span><br><span class="line">       <span class="keyword">for</span> (int num : numbers) &#123;</span><br><span class="line">           <span class="keyword">if</span> (num &gt; max) &#123;</span><br><span class="line">               max = num;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       //获取最大数的位数,即排序趟数</span><br><span class="line">       int time = 0;</span><br><span class="line">       <span class="keyword">while</span> (max &gt; 0) &#123;</span><br><span class="line">           max /= 10;</span><br><span class="line">           time++;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       //建立10个队列</span><br><span class="line">       ArrayList&lt;ArrayList&lt;Integer&gt;&gt; queue = new ArrayList&lt;&gt;();</span><br><span class="line">       <span class="keyword">for</span> (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">           queue.add(new ArrayList&lt;&gt;());</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       //进行time次分配和收集;</span><br><span class="line">       <span class="keyword">for</span>(int i = 0; i &lt; time; i++) &#123;</span><br><span class="line">           <span class="keyword">for</span> (int num : numbers) &#123;//分配</span><br><span class="line">               int x = num % (int)(Math.pow(10, i + 1)) / (int)(Math.pow(10, i));</span><br><span class="line">               ArrayList&lt;Integer&gt; queue1 = queue.get(x);</span><br><span class="line">               queue1.add(num);</span><br><span class="line">               queue.set(x, queue1);</span><br><span class="line">           &#125;</span><br><span class="line">           int count = 0;</span><br><span class="line">           <span class="keyword">for</span> (int j = 0; j &lt; 10; j++) &#123;//收集</span><br><span class="line">               <span class="keyword">while</span> (queue.get(j).size() &gt; 0) &#123;</span><br><span class="line">                   numbers[count] = queue.get(j).get(0);</span><br><span class="line">                   queue.get(j).remove(0);</span><br><span class="line">                   count++;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://oztsyg7qw.bkt.clouddn.com/java%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F.jpg" alt="八大排序"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/排序/" rel="tag"># 排序</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/28/2017-12-28-Spring1/" rel="next" title="Spring IOC、DI、AOP">
+                <i class="fa fa-chevron-left"></i> Spring IOC、DI、AOP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="金晓波" />
+            
+              <p class="site-author-name" itemprop="name">金晓波</p>
+              <p class="site-description motion-element" itemprop="description">一个不一样的码农</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/jinxiaobo" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xiaobodeworld@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">金晓波</span>
+
+  
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
