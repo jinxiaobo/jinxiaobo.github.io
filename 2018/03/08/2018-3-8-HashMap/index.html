@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="前端," />
+  <meta name="keywords" content="数据结构," />
 
 
 
@@ -79,20 +79,22 @@
 
 
 
-<meta name="description" content="大前端完整学习路线（详解）转载自： http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432">
-<meta name="keywords" content="前端">
+<meta name="description" content="HashMapHashMap的重点是以下几个：1、HashMap有一个叫做Entry的内部类，它用来存储key-value对。2、上面的Entry对象是存储在一个叫做table的Entry数组中。3、table的索引在逻辑上叫做“桶”(bucket)，它存储了链表的第一个元素。4、key的hashcode()方法用来找">
+<meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大前端完整学习路线（转载）">
-<meta property="og:url" content="http://yoursite.com/2017/11/22/2017-11-22-qianduan/index.html">
+<meta property="og:title" content="HashMap和ConcurrentHashMap实现原理">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/2018-3-8-HashMap/index.html">
 <meta property="og:site_name" content="jinxiaobo的博客">
-<meta property="og:description" content="大前端完整学习路线（详解）转载自： http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432">
+<meta property="og:description" content="HashMapHashMap的重点是以下几个：1、HashMap有一个叫做Entry的内部类，它用来存储key-value对。2、上面的Entry对象是存储在一个叫做table的Entry数组中。3、table的索引在逻辑上叫做“桶”(bucket)，它存储了链表的第一个元素。4、key的hashcode()方法用来找到Entry对象所在的桶。5、如果两个key有相同的hash值，他们会被放在ta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/%E7%8C%AB%E8%80%81%E5%A4%A7.jpeg">
-<meta property="og:updated_time" content="2017-11-22T15:32:15.072Z">
+<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/HashMap.jpeg">
+<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/ConcurrentHashMap1.png">
+<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/ConcurrentHashMap2.png">
+<meta property="og:updated_time" content="2018-03-08T08:04:51.654Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大前端完整学习路线（转载）">
-<meta name="twitter:description" content="大前端完整学习路线（详解）转载自： http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432">
-<meta name="twitter:image" content="http://oztsyg7qw.bkt.clouddn.com/%E7%8C%AB%E8%80%81%E5%A4%A7.jpeg">
+<meta name="twitter:title" content="HashMap和ConcurrentHashMap实现原理">
+<meta name="twitter:description" content="HashMapHashMap的重点是以下几个：1、HashMap有一个叫做Entry的内部类，它用来存储key-value对。2、上面的Entry对象是存储在一个叫做table的Entry数组中。3、table的索引在逻辑上叫做“桶”(bucket)，它存储了链表的第一个元素。4、key的hashcode()方法用来找到Entry对象所在的桶。5、如果两个key有相同的hash值，他们会被放在ta">
+<meta name="twitter:image" content="http://oztsyg7qw.bkt.clouddn.com/HashMap.jpeg">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/22/2017-11-22-qianduan/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/08/2018-3-8-HashMap/"/>
 
 
 
 
 
-  <title>大前端完整学习路线（转载） | jinxiaobo的博客</title>
+  <title>HashMap和ConcurrentHashMap实现原理 | jinxiaobo的博客</title>
   
 
 
@@ -255,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/22/2017-11-22-qianduan/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/2018-3-8-HashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="金晓波">
@@ -272,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">大前端完整学习路线（转载）</h1>
+          <h1 class="post-title" itemprop="name headline">HashMap和ConcurrentHashMap实现原理</h1>
         
 
         <div class="post-meta">
@@ -284,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T23:32:15+08:00">
-                2017-11-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T16:04:51+08:00">
+                2018-03-08
               </time>
             
 
@@ -307,8 +309,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -344,7 +346,13 @@
       
 
       
-        <p>大前端完整学习路线（详解）<br>转载自： <a href="http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432" target="_blank" rel="noopener">http://blog.csdn.net/u011047006/article/details/52597178?t=1494631306432</a><br><img src="http://oztsyg7qw.bkt.clouddn.com/%E7%8C%AB%E8%80%81%E5%A4%A7.jpeg" alt="猫老大"><br><a id="more"></a><br>第一阶段：<br>  ● HTML+CSS:<br>HTML进阶、CSS进阶、div+css布局、HTML+css整站开发、<br>  ● JavaScript基础：<br>Js基础教程、js内置对象常用方法、常见DOM树操作大全、ECMAscript、DOM、BOM、定时器和焦点图。<br>  ● JS基本特效：<br>常见特效、例如：tab、导航、整页滚动、轮播图、JS制作幻灯片、弹出层、手风琴菜单、瀑布流布局、滚动事件、滚差视图。<br>  ● JS高级特征：<br>正则表达式、排序算法、递归算法、闭包、函数节流、作用域链、基于距离运动框架、面向对象基础、<br>  ● JQuery：基础使用<br>悬着器、DOM操作、特效和动画、方法链、拖拽、变形、JQueryUI组件基本使用。<br>第二阶段：HTML5和移动Web开发<br>  ● HTML5：<br>HTML5新语义标签、Html5表单、音频和视频、离线和本地存储、SVG、Web Socket、Canvas.<br>  ● CSS3:<br>CSS3新选择器、伪元素、脸色表示法、边框、阴影、background系列属性改变、Transition、动画、景深和深透、3D效果制作、Velocity.js框架、元素进场、出场策略、炫酷CSS3网页制作。<br>  ● Bootstrap:<br>响应式概念、媒体查询、响应式网站制作、删格系统、删格系统原理、Bootstrap常用模板、LESS和SASS。<br>  ● 移动Web开发：<br>跨终端WEB和主流设备简介、视口、流式布局、弹性盒子、rem、移动终端JavaScript事件、手机中常见JS效果制作、Zepto.js、手机聚划算页面、手机滚屏。<br>第三阶段：HTTP服务和AJAX编程<br>  ● WEB服务器基础：<br>服务器基础知识、Apache服务器和其他WEB服务器介绍、Apache服务器搭建、HTTP介绍。<br>  ● PHP基础：<br>PHP基础语法、使用PHP处理简单的GET或者POST请求、<br>  ● AJAX上篇：<br>Ajax简介和异步的概念、Ajax框架的封装、XMLHttpRequest对象详细介绍方法、兼容性处理方法、Ajax框架的封装、Ajax中缓存问题、XML介绍和使用。<br>  ● AJAX下篇：<br>JSON和JSON解析、数据绑定和模板技术、JSONP、跨域技术、图片预读取和lazy-load技术、jQuery框架中的AjaxAPI、使用Ajax实现爆布流案例额。<br>第四阶段：面向对象进阶<br>  ● 面向对象终极篇：<br>从内存角度到理解JS面向对象、基本类型、复杂类型、原型链、ES6中的面向对象、属性读写权限、设置器、访问器。<br>  ● 面向对象三大特征：<br>继承性、多态性、封装性、接口。<br>  ● 设计模式：<br>面向对象编程思维、单例模式、工厂模式、策略模式、观察者模式、模板方法模式、代理模式、装饰者模式、适配器模式、面向切面编程。<br>第五阶段：封装一个属于自己的框架<br>  ● 框架封装基础：<br>事件流、冒泡、捕获、事件对象、事件框架、选择框架。<br>  ● 框架封装中级：<br>运动原理、单物体运动框架、多物体运动框架、运动框架面向对象封装。<br>  ● 框架封装高级和补充：<br>JQuery框架雏形、可扩展性、模块化、封装属于传智自己的框架。<br>第六阶段：模块化组件开发<br>  ● 面向组件编程：<br>面向组件编程的方式、面向组件编程的实现原理、面向组件编程实战、基于组件化思想开发网站应用程序。<br>  ● 面向模块编程：<br>AMD设计规范、CMD设计规范、RequireJS，LoadJS、淘宝的SeaJS。<br>第七阶段：主流的流行框架<br>  ● Web开发工作流：<br>Git/SVN、Yeoman脚手架、NPM/Bower依赖管理工具、Grunt/Gulp/Webpack。<br>  ● MVC/MVVM/MVW框架：<br>Angular.js、Backbone.js、Knockout/Ember。<br>  ● 常用库：<br>React.js、Vue.js、Zepto.js。<br>第八阶段：HTML5原生移动应用开发<br>  ● Cordova：<br>WebApp/NativeApp/HybirdApp简介、Cordova简介、与PhoneGap之间的关系、开发环境搭建、Cordova实战（创建项目，配置，编译，调试，部署发布）。<br>  ● Ionic：<br>Ionic简介和同类对比、模板项目解析、常见组件及使用、结合Angular构建APP、常见效果（下拉刷新，上拉加载，侧滑导航，选项卡）。<br>  ● React Native：<br>React Native简介、React Native环境配置、创建项目，配置，编译，调试，部署发布、原生模块和UI组件、原生常用API。<br>  ● HTML5+：<br>HTML5+中国产业联盟、HTML5 Plus Runtime环境、HBuilder开发工具、MUI框架、H5+开发和部署。<br>第九阶段：   Node.js全栈开发：<br>  ● 快速入门：<br>Node.js发展、生态圈、Io.js、Linux/Windows/OS X环境配置、REPL环境和控制台程序、异步编程，非阻塞I/O、模块概念，模块管理工具、开发流程，调试，测试。<br>  ● 核心模块和对象：<br>全局对象global，process，console，util、事件驱动，事件发射器、加密解密，路径操作，序列化和反序列化、文件流操作、HTTP服务端与客户端、Socket.IO。<br>  ● Web开发基础：<br>HTTP协议，请求响应处理过程、关系型数据库操作和数据访问、非关系型数据库操作和数据访问、原生的node.js开发Web应用程序、Web开发工作流、Node.js开发Blog案例。<br>  ● 快速开发框架：<br>Express简介+MVC简介、Express常用API、Express路由模块、Jade/Ejs模板引擎、使用Express重构Blog案例、Koa等其他常见MVC框架。<br>  ● Node.js开发电子商务实战：<br>需求与设计、账户模块注册登录、会员中心模块、前台展示模块、购物车，订单结算、在线客服即时通讯模块。</p>
+        <h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><p>HashMap的重点是以下几个：<br>1、HashMap有一个叫做Entry的内部类，它用来存储key-value对。<br>2、上面的Entry对象是存储在一个叫做table的Entry数组中。<br>3、table的索引在逻辑上叫做“桶”(bucket)，它存储了链表的第一个元素。<br>4、key的hashcode()方法用来找到Entry对象所在的桶。<br>5、如果两个key有相同的hash值，他们会被放在table数组的同一个桶里面。<br>6、key的equals()方法用来确保key的唯一性。<br>7、value对象的equals()和hashcode()方法根本一点用也没有。<br><a id="more"></a><br>哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——拉链法，我们可以理解为“链表的数组” ，如图：<br><img src="http://oztsyg7qw.bkt.clouddn.com/HashMap.jpeg" alt="Executor"><br>　　HashMap其实也是一个线性的数组实现的,所以可以理解为其存储数据的容器就是一个线性数组。这可能让我们很不解，一个线性的数组怎么实现按键值对来存取数据呢？这里HashMap有做一些处理。<br>　　首先HashMap里面实现一个静态内部类Entry，其重要的属性有 key , value, next，从属性key,value我们就能很明显的看出来Entry就是HashMap键值对实现的一个基础bean，我们上面说到HashMap的基础就是一个线性数组，这个数组就是Entry[]，Map里面的内容都保存在Entry[]里面。</p>
+<p>解决hash冲突的办法:<br>开放定址法（线性探测再散列，二次探测再散列，伪随机探测再散列）<br>再哈希法</p>
+<p><font color="#0099ff">链地址法</font><br>建立一个公共溢出区<br>Java中HashMap的解决办法就是采用的链地址法。</p>
+<h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><h3 id="JDK1-7的实现"><a href="#JDK1-7的实现" class="headerlink" title="JDK1.7的实现"></a>JDK1.7的实现</h3><p>在JDK1.7版本中，ConcurrentHashMap的数据结构是由一个Segment数组和多个HashEntry组成，如下图所示：<br><img src="http://oztsyg7qw.bkt.clouddn.com/ConcurrentHashMap1.png" alt="Executor"><br>Segment数组的意义就是将一个大的table分割成多个小的table来进行加锁，也就是上面的提到的锁分离技术，而每一个Segment元素存储的是HashEntry数组+链表，这个和HashMap的数据存储结构一样</p>
+<h3 id="JDK1-8的实现"><a href="#JDK1-8的实现" class="headerlink" title="JDK1.8的实现"></a>JDK1.8的实现</h3><p>JDK1.8的实现已经摒弃了Segment的概念，而是直接用Node数组+链表+红黑树的数据结构来实现，并发控制使用Synchronized和CAS来操作，整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本。<br><img src="http://oztsyg7qw.bkt.clouddn.com/ConcurrentHashMap2.png" alt="Executor"></p>
+<h2 id="总结与思考"><a href="#总结与思考" class="headerlink" title="总结与思考"></a>总结与思考</h2><p>其实可以看出JDK1.8版本的ConcurrentHashMap的数据结构已经接近HashMap，相对而言，ConcurrentHashMap只是增加了同步的操作来控制并发，从JDK1.7版本的ReentrantLock+Segment+HashEntry，到JDK1.8版本中synchronized+CAS+HashEntry+红黑树,相对而言，总结如下思考：<br>JDK1.8的实现降低锁的粒度，JDK1.7版本锁的粒度是基于Segment的，包含多个HashEntry，而JDK1.8锁的粒度就是HashEntry（首节点）<br>JDK1.8版本的数据结构变得更加简单，使得操作也更加清晰流畅，因为已经使用synchronized来进行同步，所以不需要分段锁的概念，也就不需要Segment这种数据结构了，由于粒度的降低，实现的复杂度也增加了<br>JDK1.8使用红黑树来优化链表，基于长度很长的链表的遍历是一个很漫长的过程，而红黑树的遍历效率是很快的，代替一定阈值的链表，这样形成一个最佳拍档<br>JDK1.8为什么使用内置锁synchronized来代替重入锁ReentrantLock，我觉得有以下几点：<br>因为粒度降低了，在相对而言的低粒度加锁方式，synchronized并不比ReentrantLock差，在粗粒度加锁中ReentrantLock可能通过Condition来控制各个低粒度的边界，更加的灵活，而在低粒度中，Condition的优势就没有了<br>JVM的开发团队从来都没有放弃synchronized，而且基于JVM的synchronized优化空间更大，使用内嵌的关键字比使用API更加自然<br>在大量的数据操作下，对于JVM的内存压力，基于API的ReentrantLock会开销更多的内存，虽然不是瓶颈，但是也是一个选择依据</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.importnew.com/26049.html" target="_blank" rel="noopener">http://www.importnew.com/26049.html</a><br><a href="https://www.cnblogs.com/wangzhongqiu/p/6485509.html" target="_blank" rel="noopener">https://www.cnblogs.com/wangzhongqiu/p/6485509.html</a><br><a href="http://ifeve.com/ConcurrentHashMap/" target="_blank" rel="noopener">http://ifeve.com/ConcurrentHashMap/</a><br><a href="http://blog.csdn.net/vking_wang/article/details/14166593" target="_blank" rel="noopener">http://blog.csdn.net/vking_wang/article/details/14166593</a></p>
 
       
     </div>
@@ -362,7 +370,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端/" rel="tag"># 前端</a>
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -375,15 +383,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/01/13/2018-1-10-Sort/" rel="next" title="八大排序算法（java实现）">
+                <i class="fa fa-chevron-left"></i> 八大排序算法（java实现）
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/18/Executor/" rel="prev" title="Executor框架及线程池(转载)">
-                Executor框架及线程池(转载) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -435,8 +443,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -516,6 +533,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap"><span class="nav-number">1.</span> <span class="nav-text">HashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">2.</span> <span class="nav-text">ConcurrentHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK1-7的实现"><span class="nav-number">2.1.</span> <span class="nav-text">JDK1.7的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK1-8的实现"><span class="nav-number">2.2.</span> <span class="nav-text">JDK1.8的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结与思考"><span class="nav-number">3.</span> <span class="nav-text">总结与思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
