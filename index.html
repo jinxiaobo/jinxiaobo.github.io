@@ -252,6 +252,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/09/2018-6-9-ES1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="金晓波">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jinxiaobo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/09/2018-6-9-ES1/" itemprop="url">ES基本数据查询</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T16:16:57+08:00">
+                2018-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##增加数据<br>存储数据到Elasticsearch的行为叫做索引，但在索引一个文档之前，需要确定将文档存储在哪里。一个Elasticsearch集群可以包含多个索引，相应的每个索引可以包含多个类型。这些不同的类型存储着多个文档，每个文档又有多个属性。<br>具体例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /megacorp/employee/123</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"first_name"</span> : <span class="string">"John"</span>,</span><br><span class="line">    <span class="string">"last_name"</span> :  <span class="string">"Smith"</span>,</span><br><span class="line">    <span class="string">"age"</span> :        25,</span><br><span class="line">    <span class="string">"about"</span> :      <span class="string">"I love to go rock climbing"</span>,</span><br><span class="line">    <span class="string">"interests"</span>: [ <span class="string">"sports"</span>, <span class="string">"music"</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中megacorp为索引名称，employee为类型名称，123为特定ID，三者可唯一指定一个文档。</p>
+<p>##更新文档<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST / megacorp / employee /123/_update?pretty</span><br><span class="line">&#123;</span><br><span class="line"> <span class="string">"doc"</span>: &#123; <span class="string">"first_name"</span>: <span class="string">"Jane"</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>更新我们先前索引的文档（ID为123），将first_name字段修改为“Jane”。需要注意的是，ElasticSearch实际上在底层并没有立即执行更新操作。每当我们执行一次更新操作时，ElasticSearch就会删除旧的文档，然后索引一个新的文档，所有的更新内容都包含在这个新文档之中。</p>
+<p>##删除文档<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE /megacorp/employee/123</span><br></pre></td></tr></table></figure></p>
+<p>如果找到该文档，Elasticsearch将要返回一个200 ok的HTTP响应码，和一个类似以下结构的响应体。注意，字段_version 值已经增加:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"found"</span> :    <span class="literal">true</span>,</span><br><span class="line">  <span class="string">"_index"</span> :   <span class="string">" megacorp "</span>,</span><br><span class="line">  <span class="string">"_type"</span> :    <span class="string">" employee "</span>,</span><br><span class="line">  <span class="string">"_id"</span> :      <span class="string">"123"</span>,</span><br><span class="line">  <span class="string">"_version"</span> : 3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果文档没有找到，我们将得到404 Not Found的响应码和类似这样的响应体：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"found"</span> :    <span class="literal">false</span>,</span><br><span class="line">  <span class="string">"_index"</span> :   <span class="string">" megacorp "</span>,</span><br><span class="line">  <span class="string">"_type"</span> :    <span class="string">" employee "</span>,</span><br><span class="line">  <span class="string">"_id"</span> :      <span class="string">"123"</span>,</span><br><span class="line">  <span class="string">"_version"</span> : 4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>即使文档不存在（ Found 是 false ），_version 值仍然会增加。这是Elasticsearch内部记录本的一部分，用来确保这些改变在跨多节点时以正确的顺序执行。<br>删除文档不会立即将文档从磁盘中删除，只是将文档标记为已删除状态。随着你不断的索引更多的数据，Elasticsearch 将会在后台清理标记为已删除的文档。</p>
+<p>##bool查询<br>bool查询也可以接受must、must_not和should参数下的多个查询语句。<br>must : 多个查询条件的完全匹配,相当于 and。<br>must_not : 多个查询条件的相反匹配，相当于 not。<br>should : 至少有一个查询条件匹配, 相当于 or。不必须包含，一旦包含，我们就认为它们更相关。<br>以下是具体的例子，bool 查询可以用来合并多个过滤条件查询结果的布尔逻辑<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"bool"</span>: &#123;</span><br><span class="line">      <span class="string">"must"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"term"</span>: &#123;</span><br><span class="line">            <span class="string">"cityid"</span>: <span class="string">"286799"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"must_not"</span>: [</span><br><span class="line">         &#123;</span><br><span class="line">          <span class="string">"term"</span>: &#123;</span><br><span class="line">            <span class="string">"winddir"</span>: <span class="string">"北风"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"should"</span>: [&#123;</span><br><span class="line">          <span class="string">"term"</span>: &#123;</span><br><span class="line">            <span class="string">"cond"</span>: <span class="string">"晴"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结构输出”cityid”=”286799”，”winddir”不为”北风”，且”cond”为”晴”的具有更高的分数。</p>
+<p>##filter过滤<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"bool"</span>: &#123;</span><br><span class="line">      <span class="string">"must"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"term"</span>: &#123;</span><br><span class="line">            <span class="string">"cityid"</span>: <span class="string">"286799"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"must_not"</span>: [</span><br><span class="line">         &#123;</span><br><span class="line">          <span class="string">"term"</span>: &#123;</span><br><span class="line">            <span class="string">"winddir"</span>: <span class="string">"北风"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"should"</span>: [&#123;</span><br><span class="line">          <span class="string">"term"</span>: &#123;</span><br><span class="line">            <span class="string">"cond"</span>: <span class="string">"晴"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"filter"</span>: &#123;</span><br><span class="line">        <span class="string">"range"</span>: &#123;</span><br><span class="line">          <span class="string">"humidity"</span>: &#123;</span><br><span class="line">            <span class="string">"gte"</span>: 80,</span><br><span class="line">            <span class="string">"lte"</span>: 90</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##term过滤<br>term主要用于精确匹配哪些值，比如数字，日期，布尔值或 not_analyzed 的字符串(未经分析的文本数据类型)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"term"</span>: &#123;</span><br><span class="line">      <span class="string">"cityid"</span> : <span class="string">"286799"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##terms过滤<br>terms 跟 term 有点类似，但 terms 允许指定多个匹配条件。 如果某个字段指定了多个值，那么文档需要一起去做匹配。<br>查询所有http的状态是 302 、304 的， 由于ES中状态是数字类型的字段，所以这里可以直接这么写：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">  <span class="string">"query"</span>: &#123; </span><br><span class="line">    <span class="string">"terms"</span>: &#123; </span><br><span class="line">      <span class="string">"status"</span>: [ </span><br><span class="line">        304, </span><br><span class="line">        302 </span><br><span class="line">      ] </span><br><span class="line">    &#125; </span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##query_string查询<br>使用了查询解析器来解析其内容，”query”为要解析的实际查询，具体请查看查询字符串语法：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html#query-string-syntax" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl-query-string-query.html#query-string-syntax</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"bool"</span>: &#123;</span><br><span class="line">      <span class="string">"must"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">"query_string"</span>: &#123;</span><br><span class="line">            <span class="string">"default_field"</span>: <span class="string">"humidity"</span>,</span><br><span class="line">            <span class="string">"query"</span>: <span class="string">"81 OR 83"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##range过滤<br>range过滤允许我们按照指定范围查找一批数据：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="string">"range"</span>: &#123;</span><br><span class="line">      <span class="string">"humidity"</span>: &#123;</span><br><span class="line">         <span class="string">"gte"</span>: 80,</span><br><span class="line">         <span class="string">"lte"</span>: 90</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>范围操作符包含：<br>gt : 大于<br>gte : 大于等于<br>lt : 小于<br>lte : 小于等于<br>完整的例子，查询”humidity”大于或等于80且小于或等于85的数据：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"range"</span> : &#123;</span><br><span class="line">      <span class="string">"humidity"</span> : &#123;</span><br><span class="line">        <span class="string">"gte"</span> : 80</span><br><span class="line">		 <span class="string">"lte"</span> : 85</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##exits过滤<br>exist过滤可以用于查找文档中是否包含指定字段或没有某个字段，类似于SQL语句中的IS_NULL条件。<br>完整例子，查询当前索引和类型下是否包含”humidity”字段：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"exists"</span> : &#123;</span><br><span class="line">      <span class="string">"field"</span> : <span class="string">"humidity"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该过滤条件只是针对已经查出一批数据来，但是想区分出某个字段是否存在的时候使用。</p>
+<p>##fuzzy查询<br>fuzzy查询是term查询的模糊等价<br>为了解它是如何运作的，我们首先索引一些文档：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="string">"index"</span>: &#123; <span class="string">"_id"</span>: 1 &#125;&#125;</span><br><span class="line">&#123; <span class="string">"text"</span>: <span class="string">"Surprise me!"</span>&#125;</span><br><span class="line">&#123; <span class="string">"index"</span>: &#123; <span class="string">"_id"</span>: 2 &#125;&#125;</span><br><span class="line">&#123; <span class="string">"text"</span>: <span class="string">"That was surprising."</span>&#125;</span><br><span class="line">&#123; <span class="string">"index"</span>: &#123; <span class="string">"_id"</span>: 3 &#125;&#125;</span><br><span class="line">&#123; <span class="string">"text"</span>: <span class="string">"I wasn't surprised."</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在我们可以为词 surprize 运行一个 fuzzy 查询：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"fuzzy"</span>: &#123;</span><br><span class="line">      <span class="string">"text"</span>: <span class="string">"surprize"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>fuzzy查询是一个词项级别的查询，所以它不做任何分析。它通过某个词项以及指定的fuzziness查找到词典中所有的词项。fuzziness默认设置为AUTO。<br>在我们的例子中，surprise比较surprise和surprised都在编辑距离2以内，所以文档1和3匹配。通过以下查询，我们可以减少匹配度到仅匹配surprise：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"fuzzy"</span>: &#123;</span><br><span class="line">      <span class="string">"text"</span>: &#123;</span><br><span class="line">        <span class="string">"value"</span>: <span class="string">"surprize"</span>,</span><br><span class="line">        <span class="string">"fuzziness"</span>: 1</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/2018-3-8-SpringMVC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1604,7 +1766,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1626,7 +1788,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
