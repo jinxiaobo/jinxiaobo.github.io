@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo," />
+  <meta name="keywords" content="redis," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troublesho">
-<meta name="keywords" content="Hexo">
+<meta name="description" content="redis是一种高级的key:value存储系统，其中value支持五种数据类型：1.字符串（strings）2.字符串列表（lists）3.字符串集合（sets）4.有序字符串集合（sorted sets）5.哈希（hashes）">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/12/21/hello-world/index.html">
+<meta property="og:title" content="Redis基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/09/28/2018-9-28-redis/index.html">
 <meta property="og:site_name" content="jinxiaobo的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="redis是一种高级的key:value存储系统，其中value支持五种数据类型：1.字符串（strings）2.字符串列表（lists）3.字符串集合（sets）4.有序字符串集合（sorted sets）5.哈希（hashes）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-21T07:55:35.845Z">
+<meta property="og:updated_time" content="2018-09-28T09:32:19.822Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="Redis基础知识">
+<meta name="twitter:description" content="redis是一种高级的key:value存储系统，其中value支持五种数据类型：1.字符串（strings）2.字符串列表（lists）3.字符串集合（sets）4.有序字符串集合（sorted sets）5.哈希（hashes）">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/21/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/28/2018-9-28-redis/"/>
 
 
 
 
 
-  <title>Hello World | jinxiaobo的博客</title>
+  <title>Redis基础知识 | jinxiaobo的博客</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/28/2018-9-28-redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="金晓波">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">Redis基础知识</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T15:55:35+08:00">
-                2017-12-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-28T17:32:19+08:00">
+                2018-09-28
               </time>
             
 
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
+                  <a href="/categories/NoSql/" itemprop="url" rel="index">
+                    <span itemprop="name">NoSql</span>
                   </a>
                 </span>
 
@@ -342,15 +342,10 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>redis是一种高级的key:value存储系统，其中value支持五种数据类型：<br>1.字符串（strings）<br>2.字符串列表（lists）<br>3.字符串集合（sets）<br>4.有序字符串集合（sorted sets）<br>5.哈希（hashes）<br><a id="more"></a></p>
+<h2 id="redis持久化-–-两种方式"><a href="#redis持久化-–-两种方式" class="headerlink" title="redis持久化 – 两种方式"></a>redis持久化 – 两种方式</h2><p>redis提供了两种持久化的方式，分别是RDB（Redis DataBase）和AOF（Append Only File）。<br>RDB，简而言之，就是在不同的时间点，将redis存储的数据生成快照并存储到磁盘等介质上；<br>AOF，则是换了一个角度来实现持久化，那就是将redis执行过的所有写指令记录下来，在下次redis重新启动时，只要把这些写指令从前到后再重复执行一遍，就可以实现数据恢复了。<br>其实RDB和AOF两种方式也可以同时使用，在这种情况下，如果redis重启的话，则会优先采用AOF方式来进行数据恢复，这是因为AOF方式的数据恢复完整度更高。<br>如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。</p>
+<h2 id="redis主从-用法"><a href="#redis主从-用法" class="headerlink" title="redis主从-用法"></a>redis主从-用法</h2><p>像MySQL一样，redis是支持主从同步的，而且也支持一主多从以及多级从结构。<br>主从结构，一是为了纯粹的冗余备份，二是为了提升读性能，比如很消耗性能的SORT就可以由从服务器来承担。<br>redis的主从同步是异步进行的，这意味着主从同步不会影响主逻辑，也不会降低redis的处理性能。<br>主从架构中，可以考虑关闭主服务器的数据持久化功能，只让从服务器进行持久化，这样可以提高主服务器的处理性能。<br>在主从架构中，从服务器通常被设置为只读模式，这样可以避免从服务器的数据被误修改。但是从服务器仍然可以接受CONFIG等指令，所以还是不应该将从服务器直接暴露到不安全的网络环境中。如果必须如此，那可以考虑给重要指令进行重命名，来避免命令被外人误执行。</p>
+<h2 id="redis-内存移除规则"><a href="#redis-内存移除规则" class="headerlink" title="redis-内存移除规则"></a>redis-内存移除规则</h2><p>对于内存移除规则来说，redis提供了多达6种的移除规则。他们是：<br>1.volatile-lru：使用LRU算法移除过期集合中的key<br>2.allkeys-lru：使用LRU算法移除key<br>3.volatile-random：在过期集合中移除随机的key<br>4.allkeys-random：移除随机的key<br>5.volatile-ttl：移除那些TTL值最小的key，即那些最近才过期的key。<br>6.noeviction：不进行移除。针对写操作，只是返回错误信息。<br>无论使用上述哪一种移除规则，如果没有合适的key可以移除的话，redis都会针对写请求返回错误信息。<br>参考：<a href="https://blog.csdn.net/liqingtx/article/details/60330555" target="_blank" rel="noopener">https://blog.csdn.net/liqingtx/article/details/60330555</a></p>
 
       
     </div>
@@ -368,7 +363,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/redis/" rel="tag"># redis</a>
           
         </div>
       
@@ -381,8 +376,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/19/Deadlock/" rel="next" title="死锁产生的原因及四个必要条件">
-                <i class="fa fa-chevron-left"></i> 死锁产生的原因及四个必要条件
+              <a href="/2018/09/28/2018-9-28-Serializable/" rel="next" title="Java序列化机制">
+                <i class="fa fa-chevron-left"></i> Java序列化机制
               </a>
             
           </div>
@@ -391,8 +386,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/12/21/2017-12-21-Concurrent/" rel="prev" title="java并发面试题（基础）">
-                java并发面试题（基础） <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/28/2018-9-28-ThreadPoolExecutor/" rel="prev" title="线程池ThreadPoolExecutor">
+                线程池ThreadPoolExecutor <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +540,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis持久化-–-两种方式"><span class="nav-number">1.</span> <span class="nav-text">redis持久化 – 两种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis主从-用法"><span class="nav-number">2.</span> <span class="nav-text">redis主从-用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-内存移除规则"><span class="nav-number">3.</span> <span class="nav-text">redis-内存移除规则</span></a></li></ol></div>
             
 
           </div>
