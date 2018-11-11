@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="jinxiaobo的博客">
 <meta property="og:description" content="一.内存模型">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/jinxiaobo/jinxiaobo.github.io/blob/master/images/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg">
-<meta property="og:updated_time" content="2018-11-11T14:34:02.361Z">
+<meta property="og:image" content="https://github.com/jinxiaobo/xiaobodeworld/blob/master/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg">
+<meta property="og:updated_time" content="2018-11-11T14:42:52.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="volatile关键字解析">
 <meta name="twitter:description" content="一.内存模型">
-<meta name="twitter:image" content="https://github.com/jinxiaobo/jinxiaobo.github.io/blob/master/images/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg">
+<meta name="twitter:image" content="https://github.com/jinxiaobo/xiaobodeworld/blob/master/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg">
 
 
 
@@ -344,7 +344,7 @@
       
 
       
-        <h2 id="一-内存模型"><a href="#一-内存模型" class="headerlink" title="一.内存模型"></a>一.内存模型</h2><p><img src="https://github.com/jinxiaobo/jinxiaobo.github.io/blob/master/images/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg" alt="内存模型"><br><a id="more"></a></p>
+        <h2 id="一-内存模型"><a href="#一-内存模型" class="headerlink" title="一.内存模型"></a>一.内存模型</h2><p><img src="https://github.com/jinxiaobo/xiaobodeworld/blob/master/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg" alt="内存模型"><br><a id="more"></a></p>
 <h2 id="二-并发编程中的三个概念"><a href="#二-并发编程中的三个概念" class="headerlink" title="二.并发编程中的三个概念"></a>二.并发编程中的三个概念</h2><h3 id="1-原子性"><a href="#1-原子性" class="headerlink" title="1.原子性"></a>1.原子性</h3><p>即一个操作或者多个操作 要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。</p>
 <h3 id="2-可见性"><a href="#2-可见性" class="headerlink" title="2.可见性"></a>2.可见性</h3><p>可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。</p>
 <h3 id="3-有序性"><a href="#3-有序性" class="headerlink" title="3.有序性"></a>3.有序性</h3><p>即程序执行的顺序按照代码的先后顺序执行。<br>指令重排序，一般来说，处理器为了提高程序运行效率，可能会对输入代码进行优化，它不保证程序中各个语句的执行先后顺序同代码中的顺序一致，但是它会保证程序最终执行结果和代码顺序执行的结果是一致的。指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性。<br>也就是说，要想并发程序正确地执行，必须要保证原子性、可见性以及有序性。只要有一个没有被保证，就有可能会导致程序运行不正确。</p>
