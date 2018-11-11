@@ -636,7 +636,7 @@
 
       
         
-          <p>转载自:<a href="https://www.cnblogs.com/timlearn/p/4023394.html" target="_blank" rel="noopener">https://www.cnblogs.com/timlearn/p/4023394.html</a><br><img src="http://oztsyg7qw.bkt.clouddn.com/Executor.png" alt="Executor"><br>在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread类以及实现Runnable接口并赋给Thread，这两种创建线程的方式在线程比较少的时候是没有问题的，但是当需要创建大量线程时就会出现问题，因为这种使用方法把线程创建语句随意地散落在代码中，无法统一管理线程，我们将无法管理创建线程的数量，而过量的线程创建将直接使系统崩溃。</p>
+          <p>转载自:<a href="https://www.cnblogs.com/timlearn/p/4023394.html" target="_blank" rel="noopener">https://www.cnblogs.com/timlearn/p/4023394.html</a><br><img src="https://raw.githubusercontent.com/jinxiaobo/xiaobodeworld/master/Executor.png" alt="Executor"><br>在Java并发（基础知识）—— 创建、运行以及停止一个线程中讲解了两种创建线程的方式：直接继承Thread类以及实现Runnable接口并赋给Thread，这两种创建线程的方式在线程比较少的时候是没有问题的，但是当需要创建大量线程时就会出现问题，因为这种使用方法把线程创建语句随意地散落在代码中，无法统一管理线程，我们将无法管理创建线程的数量，而过量的线程创建将直接使系统崩溃。</p>
 <p>从高内聚角度讲，我们应该创建一个统一的创建以及运行接口，为我们管理这些线程，这个统一的创建与运行接口就是JDK 5的Executor框架。<br>
           <!--noindex-->
           <div class="post-button text-center">

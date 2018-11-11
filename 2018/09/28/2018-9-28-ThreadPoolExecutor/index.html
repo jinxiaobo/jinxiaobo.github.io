@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="jinxiaobo的博客">
 <meta property="og:description" content="使用线程池主要为了解决以下几个问题：•    通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。•    对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/ThreadPoolExecutor.png">
-<meta property="og:image" content="http://oztsyg7qw.bkt.clouddn.com/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%B8%B8%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95.png">
-<meta property="og:updated_time" content="2018-09-28T09:40:14.661Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/jinxiaobo/xiaobodeworld/master/ThreadPoolExecutor.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/jinxiaobo/xiaobodeworld/master/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%B8%B8%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95.png">
+<meta property="og:updated_time" content="2018-11-11T14:54:05.907Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程池ThreadPoolExecutor">
 <meta name="twitter:description" content="使用线程池主要为了解决以下几个问题：•    通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。•    对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。">
-<meta name="twitter:image" content="http://oztsyg7qw.bkt.clouddn.com/ThreadPoolExecutor.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/jinxiaobo/xiaobodeworld/master/ThreadPoolExecutor.png">
 
 
 
@@ -346,8 +346,8 @@
 
       
         <p>使用线程池主要为了解决以下几个问题：<br>•    通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。<br>•    对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。<br><a id="more"></a></p>
-<h2 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h2><p>Executor是一个接口，跟线程池有关的基本都要跟他打交道。下面是常用的ThreadPoolExecutor的关系。<br><img src="http://oztsyg7qw.bkt.clouddn.com/ThreadPoolExecutor.png" alt="ThreadPoolExecutor"><br>Executor接口很简单，只有一个execute方法。<br>ExecutorService是Executor的子接口，增加了一些常用的对线程的控制方法，之后使用线程池主要也是使用这些方法。<br>AbstractExecutorService是一个抽象类。ThreadPoolExecutor就是实现了这个类。</p>
-<h2 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h2><p>ThreadPoolExecutor是线程池的真正实现，他通过构造方法的一系列参数，来构成不同配置的线程池。常用的构造方法有下面四个：<br><img src="http://oztsyg7qw.bkt.clouddn.com/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%B8%B8%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95.png" alt="线程池常用构造方法"></p>
+<h2 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h2><p>Executor是一个接口，跟线程池有关的基本都要跟他打交道。下面是常用的ThreadPoolExecutor的关系。<br><img src="https://raw.githubusercontent.com/jinxiaobo/xiaobodeworld/master/ThreadPoolExecutor.png" alt="ThreadPoolExecutor"><br>Executor接口很简单，只有一个execute方法。<br>ExecutorService是Executor的子接口，增加了一些常用的对线程的控制方法，之后使用线程池主要也是使用这些方法。<br>AbstractExecutorService是一个抽象类。ThreadPoolExecutor就是实现了这个类。</p>
+<h2 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h2><p>ThreadPoolExecutor是线程池的真正实现，他通过构造方法的一系列参数，来构成不同配置的线程池。常用的构造方法有下面四个：<br><img src="https://raw.githubusercontent.com/jinxiaobo/xiaobodeworld/master/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%B8%B8%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95.png" alt="线程池常用构造方法"></p>
 <h2 id="构造方法参数说明"><a href="#构造方法参数说明" class="headerlink" title="构造方法参数说明"></a>构造方法参数说明</h2><p>•    corePoolSize<br>核心线程数，默认情况下核心线程会一直存活，即使处于闲置状态也不会受存keepAliveTime限制。除非将allowCoreThreadTimeOut设置为true。<br>•    maximumPoolSize<br>线程池所能容纳的最大线程数。超过这个数的线程将被阻塞。当任务队列为没有设置大小的LinkedBlockingDeque时，这个值无效。<br>•    keepAliveTime<br>非核心线程的闲置超时时间，超过这个时间就会被回收。<br>•    unit<br>指定keepAliveTime的单位，如TimeUnit.SECONDS。当将allowCoreThreadTimeOut设置为true时对corePoolSize生效。<br>•    workQueue<br>线程池中的任务队列.<br>常用的有三种队列，SynchronousQueue,LinkedBlockingDeque,ArrayBlockingQueue。<br>•    threadFactory<br>线程工厂，提供创建新线程的功能。ThreadFactory是一个接口，只有一个方法<br>通过线程工厂可以对线程的一些属性进行定制。<br>public interface ThreadFactory {<br>  Thread newThread(Runnable r);<br>}<br>•    RejectedExecutionHandler<br>RejectedExecutionHandler也是一个接口，只有一个方法<br>当线程池中的资源已经全部使用，添加新线程被拒绝时，会调用RejectedExecutionHandler的rejectedExecution方法。<br>public interface RejectedExecutionHandler {<br>  void rejectedExecution(Runnable var1, ThreadPoolExecutor var2);<br>}</p>
 <h2 id="线程池规则"><a href="#线程池规则" class="headerlink" title="线程池规则"></a>线程池规则</h2><p>线程池的线程执行规则跟任务队列有很大的关系。</p>
 <p>•    下面都假设任务队列没有大小限制：</p>
